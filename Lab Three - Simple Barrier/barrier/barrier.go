@@ -20,7 +20,7 @@
 // Modified by: Nebojsa Kukic
 // Student Number: C00283550
 // Issues:
-// The barrier is not implemented! --solved--
+// The barrier is not implemented!
 // --------------------------------------------
 // Description: The barrier has been implemented using mutexes and semaphores
 package main
@@ -39,7 +39,7 @@ var barrierCounter int
 var barrierSem *semaphore.Weighted
 
 // Place a barrier in this function --use Mutex's and Semaphores
-func doStuff(goNum int, wg *sync.WaitGroup, totalRoutines int) /* bool not used*/ {
+func doStuff(goNum int, wg *sync.WaitGroup, totalRoutines int) bool {
 	time.Sleep(time.Second)
 	fmt.Println("Part A", goNum)
 	//we wait here until everyone has completed part A
@@ -53,10 +53,14 @@ func doStuff(goNum int, wg *sync.WaitGroup, totalRoutines int) /* bool not used*
 	barrierMutex.Unlock()
 
 	// Wait at the barrier
+	err := barrierSem.Acquire(context.TODO(), 1)
+	if err != nil {
+		return false
+	}
 
 	fmt.Println("PartB", goNum)
 	wg.Done()
-	// return true -> not used
+	return true
 }
 
 func main() {
@@ -78,6 +82,4 @@ func main() {
 	}
 
 	wg.Wait() //wait for everyone to finish before exiting
-
-	fmt.Println("\nAll goroutines finished.")
 }
