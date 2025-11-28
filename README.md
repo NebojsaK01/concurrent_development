@@ -2,4 +2,4 @@
 
 ## Four labs for Concurrent Development.
 
-Additional README/Documnetation files in each lab folder if seeking for any additional information/documentation.
+Additional README/Documentation files in each lab folder if seeking for any additional information/documentation.
